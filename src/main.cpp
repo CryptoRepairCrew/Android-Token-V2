@@ -41,9 +41,9 @@ static CBigNum bnProofOfStakeHardLimit(~uint256(0) >> 30); // disabled temporari
 static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 16);
 static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 
-unsigned int nStakeMinAge = 60 * 60 * 24 * 30; // minimum age for coin age
-unsigned int nStakeMaxAge = 60 * 60 * 24 * 90; // stake age of full weight
-unsigned int nStakeTargetSpacing = 30; // 1-minute block spacing
+unsigned int nStakeMinAge = 60 * 60 * 24 * 30;	// minimum age for coin age: 30d
+unsigned int nStakeMaxAge = 60 * 60 * 24 * 60;	// stake age of full weight: 60d
+unsigned int nStakeTargetSpacing = 30;	// 30 sec block spacing
 int64 nChainStartTime = 1372351910;
 int nCoinbaseMaturity = 5;
 CBlockIndex* pindexGenesisBlock = NULL;
@@ -1010,7 +1010,7 @@ int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTi
     return nSubsidy;
 }
 
-static const int64 nTargetTimespan = 0.16 * 24 * 60 * 60;  // 0.16 of a day
+static const int64 nTargetTimespan = 0.16 * 24 * 60 * 60; // 0.16 of a day
 static const int64 nTargetSpacingWorkMax = 12 * nStakeTargetSpacing; // 12 minutes
 
 //
