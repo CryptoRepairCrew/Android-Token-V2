@@ -7,18 +7,21 @@ CONFIG += no_include_pwd
 
 # UNCOMMENT THIS SECTION TO BUILD ON WINDOWS
 
+#uncomment the following section to enable building on windows:
 #windows:LIBS += -lshlwapi
 #LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
 #LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
 #windows:LIBS += -lws2_32 -lole32 -loleaut32 -luuid -lgdi32
-#LIBS += -lboost_system-mgw46-mt-sd-1_53 -lboost_filesystem-mgw46-mt-sd-1_53 -lboost_program_options-mgw46-mt-sd-1_53 -lboost_thread-mgw46-mt-sd-1_53
-#BOOST_LIB_SUFFIX=-mgw46-mt-sd-1_53
-#BOOST_INCLUDE_PATH=C:/deps/boost
-#BOOST_LIB_PATH=C:/deps/boost/stage/lib
-#BDB_INCLUDE_PATH=c:/deps/db/build_unix
-#BDB_LIB_PATH=c:/deps/db/build_unix
-#OPENSSL_INCLUDE_PATH=c:/deps/ssl/include
-#OPENSSL_LIB_PATH=c:/deps/ssl
+#LIBS += -lboost_system-mgw47-mt-s-1_55 -lboost_filesystem-mgw47-mt-s-1_55 -lboost_program_options-mgw47-mt-s-1_55 -lboost_thread-mgw47-mt-s-1_55
+#BOOST_LIB_SUFFIX=-mgw47-mt-s-1_55
+#BOOST_INCLUDE_PATH=C:/dev/coindeps/gcc47/boost
+#BOOST_LIB_PATH=C:/dev/coindeps/gcc47/boost/stage/lib
+#BDB_INCLUDE_PATH=c:/dev/coindeps/gcc47/db/build_unix
+#BDB_LIB_PATH=c:/dev/coindeps/gcc47/db/build_unix
+#OPENSSL_INCLUDE_PATH=c:/dev/coindeps/gcc47/openssl/include
+#OPENSSL_LIB_PATH=c:/dev/coindeps/gcc47/openssl
+#MINIUPNPC_LIB_PATH=c:/dev/coindeps/gcc47/miniupnpc-1.8
+#MINIUPNPC_INCLUDE_PATH=c:/dev/coindeps/gcc47/miniupnpc-1.8
 
 OBJECTS_DIR = build
 MOC_DIR = build
@@ -43,7 +46,7 @@ QMAKE_LFLAGS *= -fstack-protector-all --param ssp-buffer-size=1
 # This can be enabled for Windows, when we switch to MinGW >= 4.4.x.
 }
 # for extra security on Windows: enable ASLR and DEP via GCC linker flags
-win32:QMAKE_LFLAGS *= -Wl,--dynamicbase -Wl,--nxcompat
+win32:QMAKE_LFLAGS *= -Wl,--dynamicbase -Wl,--nxcompat -static
 
 # use: qmake "USE_QRCODE=1"
 # libqrencode (http://fukuchi.org/works/qrencode/index.en.html) must be installed for support
