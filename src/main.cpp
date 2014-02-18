@@ -2535,7 +2535,7 @@ bool LoadBlockIndex(bool fAllowNew)
 //    CTxOut(empty)
 //vMerkleTree: ea6fed5e2
         // Genesis block
-        const char* pszTimestamp = "San Francisco Gets Ready to Marry ‘Anyone Who Wants To’ -Jun 26, 2013 10:01 PM MT";
+        const char* pszTimestamp = "Debt Fight Retreat Is Seen as G.O.P. Campaign Salvo - 2014/02/17 NY TIMES";
         CTransaction txNew;
         txNew.nTime = nChainStartTime;
         txNew.vin.resize(1);
