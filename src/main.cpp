@@ -41,8 +41,8 @@ static CBigNum bnProofOfStakeHardLimit(~uint256(0) >> 30); // disabled temporari
 static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 16);
 static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 
-unsigned int nStakeMinAge = 60 * 60 * 24 * 15;	// minimum age for coin age: 15d
-unsigned int nStakeMaxAge = 60 * 60 * 24 * 30;	// stake age of full weight: 30d
+unsigned int nStakeMinAge = 60 * 60 * 24 * 30;	// minimum age for coin age: 30d
+unsigned int nStakeMaxAge = 60 * 60 * 24 * 60;	// stake age of full weight: 60d
 unsigned int nStakeTargetSpacing = 30;	// 30 sec block spacing
 int64 nChainStartTime = 1372351910;
 int nCoinbaseMaturity = 5;
@@ -941,9 +941,11 @@ int64 GetProofOfWorkReward(unsigned int nHeight)
 {
 		int64 nSubsidy = 0 * COIN;
 
-		if (nHeight == 0)
+		if (nHeight < 2)
 			nSubsidy = 66800000000 * COIN; // 66,800,000,000 coins
-		printf(">>> nHeight = %d, Reward = %d\n", nHeight, nSubsidy);
+		else if (nHeight > 23040 )
+			nSubsidy = 0 * COIN; // 0 coins per year POW Inflation
+		//printf(">>> nHeight = %d, Reward = %d\n", nHeight, nSubsidy);
     	return nSubsidy;
 }
 
@@ -962,7 +964,7 @@ int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTi
         CBigNum bnTargetLimit = bnProofOfStakeLimit;
         bnTargetLimit.SetCompact(bnTargetLimit.GetCompact());
 
-        // Android Token: reward for coin-year is cut in half every 64x multiply of PoS difficulty
+        // AndroidTokensV2: reward for coin-year is cut in half every 64x multiply of PoS difficulty
         // A reasonably continuous curve is used to avoid shock to market
         // (nRewardCoinYearLimit / nRewardCoinYear) ** 4 == bnProofOfStakeLimit / bnTarget
         //
@@ -984,10 +986,11 @@ int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTi
         }
 
         nRewardCoinYear = bnUpperBound.getuint64();
-          if (nTime > REWARD_FIX_SWITCH_TIME)
-          nRewardCoinYear = min(nRewardCoinYear, MAX_MINT_PROOF_OF_STAKE);
-    else
-          nRewardCoinYear = min((nRewardCoinYear / CENT) * CENT, MAX_MINT_PROOF_OF_STAKE);
+
+		if (nTime > ROUND_SWITCH_TIME)
+			nRewardCoinYear = min(nRewardCoinYear, MAX_MINT_PROOF_OF_STAKE);
+		else
+		nRewardCoinYear = min((nRewardCoinYear / CENT) * CENT, MAX_MINT_PROOF_OF_STAKE);
     }
     else
     {
@@ -996,16 +999,16 @@ int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTi
     }
 
     int64 nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear;
-    if (nTime > REWARD_FIX_SWITCH_TIME)
-        nSubsidy = (nCoinAge * 33 * nRewardCoinYear) / (365 * 33 + 8) ;
-  else
-        nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear;
+
+	if (nTime > ROUND_SWITCH_TIME)
+		nSubsidy = (nCoinAge * 33 * nRewardCoinYear) / (365 * 33 + 8) ;
+	else
+		nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear;
 
     if (fDebug && GetBoolArg("-printcreation"))
         printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRI64d" nBits=%d\n", FormatMoney(nSubsidy).c_str(), nCoinAge, nBits);
     return nSubsidy;
 }
-
 
 static const int64 nTargetTimespan = 0.16 * 24 * 60 * 60; // 0.16 of a day
 static const int64 nTargetSpacingWorkMax = 12 * nStakeTargetSpacing; // 12 minutes
