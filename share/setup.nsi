@@ -20,7 +20,7 @@ SetCompressor /SOLID lzma
 !define MUI_STARTMENUPAGE_REGISTRY_KEY ${REGKEY}
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME StartMenuGroup
 !define MUI_STARTMENUPAGE_DEFAULTFOLDER AndroidTokensV2
-!define MUI_FINISHPAGE_RUN $INSTDIR\cryptogenicbullion-qt.exe
+!define MUI_FINISHPAGE_RUN $INSTDIR\androidtokensv2-qt.exe
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 !define MUI_UNWELCOMEFINISHPAGE_BITMAP "../share/pixmaps/nsis-wizard.bmp"
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
@@ -45,7 +45,7 @@ Var StartMenuGroup
 !insertmacro MUI_LANGUAGE English
 
 # Installer attributes
-OutFile cryptogenicbullion-0.3.0-win32-setup.exe
+OutFile androidtokensv2-0.3.0-win32-setup.exe
 InstallDir $PROGRAMFILES\AndroidTokensV2
 CRCCheck on
 XPStyle on
@@ -66,11 +66,11 @@ ShowUninstDetails show
 Section -Main SEC0000
     SetOutPath $INSTDIR
     SetOverwrite on
-    File ../release/cryptogenicbullion-qt.exe
+    File ../release/androidtokensv2-qt.exe
     File /oname=license.txt ../COPYING
     File /oname=readme.txt ../doc/README_windows.txt
     SetOutPath $INSTDIR\daemon
-    File ../src/cryptogenicbulliond.exe
+    File ../src/androidtokensv2d.exe
     SetOutPath $INSTDIR\src
     File /r /x *.exe /x *.o ../src\*.*
     SetOutPath $INSTDIR
@@ -87,7 +87,7 @@ Section -post SEC0001
     WriteUninstaller $INSTDIR\uninstall.exe
     !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     CreateDirectory $SMPROGRAMS\$StartMenuGroup
-    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\AndroidTokensV2.lnk" $INSTDIR\cryptogenicbullion-qt.exe
+    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\AndroidTokensV2.lnk" $INSTDIR\androidtokensv2-qt.exe
     CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Uninstall AndroidTokensV2.lnk" $INSTDIR\uninstall.exe
     !insertmacro MUI_STARTMENU_WRITE_END
     WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayName "$(^Name)"
@@ -102,8 +102,8 @@ Section -post SEC0001
     # AndroidTokensV2: URI handling disabled for 0.6.0
         WriteRegStr HKCR "AndroidTokensV2" "URL Protocol" ""
         WriteRegStr HKCR "AndroidTokensV2" "" "URL:AndroidTokensV2"
-        WriteRegStr HKCR "AndroidTokensV2\DefaultIcon" "" $INSTDIR\cryptogenicbullion-qt.exe
-        WriteRegStr HKCR "AndroidTokensV2\shell\open\command" "" '"$INSTDIR\cryptogenicbullion-qt.exe" "$$1"'
+        WriteRegStr HKCR "AndroidTokensV2\DefaultIcon" "" $INSTDIR\androidtokensv2-qt.exe
+        WriteRegStr HKCR "AndroidTokensV2\shell\open\command" "" '"$INSTDIR\androidtokensv2-qt.exe" "$$1"'
 SectionEnd
 
 # Macro for selecting uninstaller sections
@@ -121,7 +121,7 @@ done${UNSECTION_ID}:
 
 # Uninstaller sections
 Section /o -un.Main UNSEC0000
-    Delete /REBOOTOK $INSTDIR\cryptogenicbullion-qt.exe
+    Delete /REBOOTOK $INSTDIR\androidtokensv2-qt.exe
     Delete /REBOOTOK $INSTDIR\license.txt
     Delete /REBOOTOK $INSTDIR\readme.txt
     RMDir /r /REBOOTOK $INSTDIR\daemon
