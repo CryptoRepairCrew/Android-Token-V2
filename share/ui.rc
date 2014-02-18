@@ -1,4 +1,4 @@
-AndroidToken               ICON    "pixmaps/AndroidToken.ico"
+AndroidTokenV2               ICON    "pixmaps/AndroidTokenV2.ico"
 
 #include "wx/msw/wx.rc"
 

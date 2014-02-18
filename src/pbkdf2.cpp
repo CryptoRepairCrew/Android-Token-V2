@@ -1,4 +1,4 @@
-// Copyright (c) 2013 AndroidToken Developers
+// Copyright (c) 2013 AndroidTokenV2 Developers
 
 #include <string.h>
 #include "pbkdf2.h"

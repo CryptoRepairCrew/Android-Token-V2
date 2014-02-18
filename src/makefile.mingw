@@ -87,8 +87,8 @@ OBJS= \
 
 all: cryptogenicbulliond.exe
 
-test check: test_AndroidToken.exe FORCE
-	test_AndroidToken.exe
+test check: test_AndroidTokenV2.exe FORCE
+	test_AndroidTokenV2.exe
 
 obj/%.o: %.cpp $(HEADERS)
 	g++ -c $(CFLAGS) -o $@ $<
@@ -111,7 +111,7 @@ test_bitcoin.exe: $(TESTOBJS) $(filter-out obj/init.o,$(OBJS:obj/%=obj/%))
 	g++ $(CFLAGS) $(LDFLAGS) -o $@ $(LIBPATHS) $^ -lboost_unit_test_framework $(LIBS)
 
 clean:
-	-del /Q cryptogenicbulliond test_AndroidToken
+	-del /Q cryptogenicbulliond test_AndroidTokenV2
 	-del /Q obj\*
 	-del /Q obj-test\*
 

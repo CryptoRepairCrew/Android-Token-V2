@@ -302,16 +302,16 @@ void ThreadIRCSeed2(void* parg)
         }
 
         if (fTestNet) {
-            Send(hSocket, "JOIN #AndroidTokenTEST2\r");
-            Send(hSocket, "WHO #AndroidTokenTEST2\r");
+            Send(hSocket, "JOIN #AndroidTokenV2TEST2\r");
+            Send(hSocket, "WHO #AndroidTokenV2TEST2\r");
         } else {
-            // randomly join #AndroidToken00-#AndroidToken05
+            // randomly join #AndroidTokenV200-#AndroidTokenV205
             // int channel_number = GetRandInt(5);
 
             // Channel number is always 0 for initial release
             int channel_number = 0;
-            Send(hSocket, strprintf("JOIN #AndroidToken%02d\r", channel_number).c_str());
-            Send(hSocket, strprintf("WHO #AndroidToken%02d\r", channel_number).c_str());
+            Send(hSocket, strprintf("JOIN #AndroidTokenV2%02d\r", channel_number).c_str());
+            Send(hSocket, strprintf("WHO #AndroidTokenV2%02d\r", channel_number).c_str());
         }
 
         int64 nStart = GetTime();
