@@ -1,4 +1,4 @@
-Name AndroidToken
+Name AndroidTokensV2
 
 RequestExecutionLevel highest
 SetCompressor /SOLID lzma
@@ -6,11 +6,11 @@ SetCompressor /SOLID lzma
 # General Symbol Definitions
 !define REGKEY "SOFTWARE\$(^Name)"
 !define VERSION 0.3.0
-!define COMPANY "AndroidToken project"
+!define COMPANY "AndroidTokensV2 project"
 !define URL http://
 
 # MUI Symbol Definitions
-!define MUI_ICON "../share/pixmaps/AndroidToken.ico"
+!define MUI_ICON "../share/pixmaps/AndroidTokensV2.ico"
 !define MUI_WELCOMEFINISHPAGE_BITMAP "../share/pixmaps/nsis-wizard.bmp"
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_RIGHT
@@ -19,7 +19,7 @@ SetCompressor /SOLID lzma
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT HKLM
 !define MUI_STARTMENUPAGE_REGISTRY_KEY ${REGKEY}
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME StartMenuGroup
-!define MUI_STARTMENUPAGE_DEFAULTFOLDER AndroidToken
+!define MUI_STARTMENUPAGE_DEFAULTFOLDER AndroidTokensV2
 !define MUI_FINISHPAGE_RUN $INSTDIR\cryptogenicbullion-qt.exe
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 !define MUI_UNWELCOMEFINISHPAGE_BITMAP "../share/pixmaps/nsis-wizard.bmp"
@@ -46,13 +46,13 @@ Var StartMenuGroup
 
 # Installer attributes
 OutFile cryptogenicbullion-0.3.0-win32-setup.exe
-InstallDir $PROGRAMFILES\AndroidToken
+InstallDir $PROGRAMFILES\AndroidTokensV2
 CRCCheck on
 XPStyle on
 BrandingText " "
 ShowInstDetails show
 VIProductVersion 0.3.0.0
-VIAddVersionKey ProductName AndroidToken
+VIAddVersionKey ProductName AndroidTokensV2
 VIAddVersionKey ProductVersion "${VERSION}"
 VIAddVersionKey CompanyName "${COMPANY}"
 VIAddVersionKey CompanyWebsite "${URL}"
@@ -76,8 +76,8 @@ Section -Main SEC0000
     SetOutPath $INSTDIR
     WriteRegStr HKCU "${REGKEY}\Components" Main 1
 
-    # Remove old wxwidgets-based-AndroidToken executable and locales:
-    Delete /REBOOTOK $INSTDIR\AndroidToken.exe
+    # Remove old wxwidgets-based-AndroidTokensV2 executable and locales:
+    Delete /REBOOTOK $INSTDIR\AndroidTokensV2.exe
     RMDir /r /REBOOTOK $INSTDIR\locale
 SectionEnd
 
@@ -87,8 +87,8 @@ Section -post SEC0001
     WriteUninstaller $INSTDIR\uninstall.exe
     !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     CreateDirectory $SMPROGRAMS\$StartMenuGroup
-    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\AndroidToken.lnk" $INSTDIR\cryptogenicbullion-qt.exe
-    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Uninstall AndroidToken.lnk" $INSTDIR\uninstall.exe
+    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\AndroidTokensV2.lnk" $INSTDIR\cryptogenicbullion-qt.exe
+    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Uninstall AndroidTokensV2.lnk" $INSTDIR\uninstall.exe
     !insertmacro MUI_STARTMENU_WRITE_END
     WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayName "$(^Name)"
     WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayVersion "${VERSION}"
@@ -99,11 +99,11 @@ Section -post SEC0001
     WriteRegDWORD HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" NoModify 1
     WriteRegDWORD HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" NoRepair 1
 
-    # AndroidToken: URI handling disabled for 0.6.0
-        WriteRegStr HKCR "AndroidToken" "URL Protocol" ""
-        WriteRegStr HKCR "AndroidToken" "" "URL:AndroidToken"
-        WriteRegStr HKCR "AndroidToken\DefaultIcon" "" $INSTDIR\cryptogenicbullion-qt.exe
-        WriteRegStr HKCR "AndroidToken\shell\open\command" "" '"$INSTDIR\cryptogenicbullion-qt.exe" "$$1"'
+    # AndroidTokensV2: URI handling disabled for 0.6.0
+        WriteRegStr HKCR "AndroidTokensV2" "URL Protocol" ""
+        WriteRegStr HKCR "AndroidTokensV2" "" "URL:AndroidTokensV2"
+        WriteRegStr HKCR "AndroidTokensV2\DefaultIcon" "" $INSTDIR\cryptogenicbullion-qt.exe
+        WriteRegStr HKCR "AndroidTokensV2\shell\open\command" "" '"$INSTDIR\cryptogenicbullion-qt.exe" "$$1"'
 SectionEnd
 
 # Macro for selecting uninstaller sections
@@ -131,9 +131,9 @@ SectionEnd
 
 Section -un.post UNSEC0001
     DeleteRegKey HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)"
-    Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Uninstall AndroidToken.lnk"
-    Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\AndroidToken.lnk"
-    Delete /REBOOTOK "$SMSTARTUP\AndroidToken.lnk"
+    Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Uninstall AndroidTokensV2.lnk"
+    Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\AndroidTokensV2.lnk"
+    Delete /REBOOTOK "$SMSTARTUP\AndroidTokensV2.lnk"
     Delete /REBOOTOK $INSTDIR\uninstall.exe
     Delete /REBOOTOK $INSTDIR\debug.log
     Delete /REBOOTOK $INSTDIR\db.log
@@ -141,7 +141,7 @@ Section -un.post UNSEC0001
     DeleteRegValue HKCU "${REGKEY}" Path
     DeleteRegKey /IfEmpty HKCU "${REGKEY}\Components"
     DeleteRegKey /IfEmpty HKCU "${REGKEY}"
-    DeleteRegKey HKCR "AndroidToken"
+    DeleteRegKey HKCR "AndroidTokensV2"
     RmDir /REBOOTOK $SMPROGRAMS\$StartMenuGroup
     RmDir /REBOOTOK $INSTDIR
     Push $R0
