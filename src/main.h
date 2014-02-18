@@ -41,7 +41,6 @@ static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 static const unsigned int PROTOCOL_SWITCH_TIME = 1371686400; // 20 Jun 2013 00:00:00
 
 static const unsigned int REWARD_SWITCH_TIME = 1369432800; // 25 May 2013 00:00:00
-static const unsigned int REWARD_FIX_SWITCH_TIME = 1369432800; // 25 May 2013 00:00:00
 
 static const unsigned int ROUND_SWITCH_TIME = 1375747200; // 6 August 2013 00:00:00
 
