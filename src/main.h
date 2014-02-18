@@ -35,7 +35,7 @@ static const int64 MIN_RELAY_TX_FEE = 10 * CENT;
 static const int64 MAX_MONEY = 180000000000 * COIN; //Max initial coins 1 million + 50 years inflation
 static const int64 MAX_MINT_PROOF_OF_WORK = 66800000000 * COIN;
 static const int64 MAX_MINT_PROOF_OF_WORK_LEGACY = 66800000000 * COIN;
-static const int64 MAX_MINT_PROOF_OF_STAKE = 1 * CENT;
+static const int64 MAX_MINT_PROOF_OF_STAKE = 3 * CENT;
 
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 static const unsigned int PROTOCOL_SWITCH_TIME = 1371686400; // 20 Jun 2013 00:00:00
