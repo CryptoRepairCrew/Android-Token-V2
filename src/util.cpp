@@ -960,7 +960,7 @@ static std::string FormatException(std::exception* pex, const char* pszThread)
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "AndroidToken";
+    const char* pszModule = "AndroidTokensV2";
 #endif
     if (pex)
         return strprintf(
@@ -1009,13 +1009,13 @@ void PrintExceptionContinue(std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\AndroidToken
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\AndroidToken
-    // Mac: ~/Library/Application Support/AndroidToken
-    // Unix: ~/.AndroidToken
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\AndroidTokensV2
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\AndroidTokensV2
+    // Mac: ~/Library/Application Support/AndroidTokensV2
+    // Unix: ~/.AndroidTokensV2
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "AndroidToken";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "AndroidTokensV2";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -1027,10 +1027,10 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     fs::create_directory(pathRet);
-    return pathRet / "AndroidToken";
+    return pathRet / "AndroidTokensV2";
 #else
     // Unix
-    return pathRet / ".AndroidToken";
+    return pathRet / ".AndroidTokensV2";
 #endif
 #endif
 }
@@ -1072,7 +1072,7 @@ const boost::filesystem::path &GetDataDir(bool fNetSpecific)
 
 boost::filesystem::path GetConfigFile()
 {
-    boost::filesystem::path pathConfigFile(GetArg("-conf", "AndroidToken.conf"));
+    boost::filesystem::path pathConfigFile(GetArg("-conf", "AndroidTokensV2.conf"));
     if (!pathConfigFile.is_complete()) pathConfigFile = GetDataDir(false) / pathConfigFile;
     return pathConfigFile;
 }
@@ -1103,7 +1103,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 
 boost::filesystem::path GetPidFile()
 {
-    boost::filesystem::path pathPidFile(GetArg("-pid", "AndroidTokend.pid"));
+    boost::filesystem::path pathPidFile(GetArg("-pid", "AndroidTokensV2d.pid"));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }
@@ -1243,10 +1243,10 @@ void AddTimeData(const CNetAddr& ip, int64 nTime)
                 if (!fMatch)
                 {
                     fDone = true;
-                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong AndroidToken will not work properly.");
+                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong AndroidTokensV2 will not work properly.");
                     strMiscWarning = strMessage;
                     printf("*** %s\n", strMessage.c_str());
-                    uiInterface.ThreadSafeMessageBox(strMessage+" ", string("AndroidToken"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION);
+                    uiInterface.ThreadSafeMessageBox(strMessage+" ", string("AndroidTokensV2"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION);
                 }
             }
         }

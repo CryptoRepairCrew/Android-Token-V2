@@ -1,4 +1,4 @@
-// Copyright (c) 2013 AndroidToken Developers
+// Copyright (c) 2013 AndroidTokensV2 Developers
 
 #ifndef PBKDF2_H
 #define PBKDF2_H
