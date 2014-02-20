@@ -276,7 +276,7 @@ class CBitcoinAddress : public CBase58Data
 public:
     enum
     {
-        PUBKEY_ADDRESS = 23,  // AndroidTokensV2: address begin with 'A'
+        PUBKEY_ADDRESS = 23,  // AndroidsTokensv2: address begin with 'A'
         SCRIPT_ADDRESS = 8, 
         PUBKEY_ADDRESS_TEST = 111,
         SCRIPT_ADDRESS_TEST = 196,
