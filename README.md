@@ -1,4 +1,4 @@
-AndroidTokensV2 Cryptographic Commodity
+AndroidsTokensV2 Cryptographic Commodity
 
 Proof of Work/Proof of Stake Hybrid
 
@@ -37,7 +37,7 @@ Default RPC Port: 8395
 
 Sample config file:
 
-create a file and name it AndroidTokensV2.conf
+create a file and name it AndroidsTokensV2.conf
 
 And copy/paste the following contents:
 
@@ -93,8 +93,8 @@ replace username and password with your own username and password.  Do not use t
 
 Place the file in your data directory. (you need to run the Qt or daemon once before you do this)
 
-If using Linux, the data directory is located at /home/User/.AndroidTokensV2 
+If using Linux, the data directory is located at /home/User/.AndroidsTokensV2 
 where User is your login username for your system.
 
-If using Windows, the data directory is located at C:\Users\USERNAME\AppData\Roaming\AndroidTokensV2 where USERNAME is replaced with your Windows Username.
+If using Windows, the data directory is located at C:\Users\USERNAME\AppData\Roaming\AndroidsTokensV2 where USERNAME is replaced with your Windows Username.
 

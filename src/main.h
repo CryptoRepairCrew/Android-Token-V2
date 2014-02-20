@@ -929,7 +929,7 @@ public:
     // ppcoin: entropy bit for stake modifier if chosen by modifier
     unsigned int GetStakeEntropyBit(unsigned int nHeight) const
     {
-        // Protocol switch to support p2pool at AndroidTokensV2 block #9689
+        // Protocol switch to support p2pool at AndroidsTokensV2 block #9689
         if (nHeight >= 9689 || fTestNet)
         {
             // Take last bit of block hash as entropy bit
@@ -938,7 +938,7 @@ public:
                 printf("GetStakeEntropyBit: nHeight=%u hashBlock=%s nEntropyBit=%u\n", nHeight, GetHash().ToString().c_str(), nEntropyBit);
             return nEntropyBit;
         }
-        // Before AndroidTokensV2 block #9689 - old protocol
+        // Before AndroidsTokensV2 block #9689 - old protocol
         uint160 hashSig = Hash160(vchBlockSig);
         if (fDebug && GetBoolArg("-printstakemodifier"))
             printf("GetStakeEntropyBit: hashSig=%s", hashSig.ToString().c_str());

@@ -136,10 +136,10 @@ OBJS= \
     obj/scrypt-x86_64.o
 
 
-all: androidtokensv2d
+all: androidstokensv2d
 
-test check: test_AndroidTokensV2 FORCE
-	./test_AndroidTokensV2
+test check: test_AndroidsTokensV2 FORCE
+	./test_AndroidsTokensV2
 
 # auto-generated dependencies:
 -include obj/*.P
@@ -163,7 +163,7 @@ obj/%.o: %.cpp
 	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	  rm -f $(@:%.o=%.d)
 
-androidtokensv2d: $(OBJS:obj/%=obj/%)
+androidstokensv2d: $(OBJS:obj/%=obj/%)
 	$(LINK) $(xCXXFLAGS) -o $@ $^ $(xLDFLAGS) $(LIBS)
 
 TESTOBJS := $(patsubst test/%.cpp,obj-test/%.o,$(wildcard test/*.cpp))
@@ -175,11 +175,11 @@ obj-test/%.o: test/%.cpp
 	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	  rm -f $(@:%.o=%.d)
 
-test_AndroidTokensV2: $(TESTOBJS) $(filter-out obj/init.o,$(OBJS:obj/%=obj/%))
+test_AndroidsTokensV2: $(TESTOBJS) $(filter-out obj/init.o,$(OBJS:obj/%=obj/%))
 	$(LINK) $(xCXXFLAGS) -o $@ $(LIBPATHS) $^ -Wl,-B$(LMODE) -lboost_unit_test_framework $(xLDFLAGS) $(LIBS)
 
 clean:
-	-rm -f androidtokensv2d test_AndroidTokensV2
+	-rm -f androidstokensv2d test_AndroidsTokensV2
 	-rm -f obj/*.o
 	-rm -f obj-test/*.o
 	-rm -f obj/*.P
