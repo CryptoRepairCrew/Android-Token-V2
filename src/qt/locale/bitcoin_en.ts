@@ -6,18 +6,18 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+14"/>
-        <source>About AndroidTokensV2</source>
-        <translation>About AndroidTokensV2</translation>
+        <source>About AndroidsTokensv2</source>
+        <translation>About AndroidsTokensv2</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>&lt;b&gt;AndroidTokensV2&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;AndroidTokensV2&lt;/b&gt; version</translation>
+        <source>&lt;b&gt;AndroidsTokensv2&lt;/b&gt; version</source>
+        <translation>&lt;b&gt;AndroidsTokensv2&lt;/b&gt; version</translation>
     </message>
     <message>
         <location line="+41"/>
-        <source>Copyright © 2009-2012 The AndroidTokensV2 developers</source>
-        <translation>Copyright © 2009-2012 The AndroidTokensV2 developers</translation>
+        <source>Copyright © 2009-2012 The AndroidsTokensv2 developers</source>
+        <translation>Copyright © 2009-2012 The AndroidsTokensv2 developers</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -64,8 +64,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-46"/>
-        <source>These are your AndroidTokensV2 addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation>These are your AndroidTokensV2 addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</translation>
+        <source>These are your AndroidsTokensv2 addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <translation>These are your AndroidsTokensv2 addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</translation>
     </message>
     <message>
         <location line="+60"/>
@@ -79,8 +79,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+11"/>
-        <source>Sign a message to prove you own a AndroidTokensV2 address</source>
-        <translation>Sign a message to prove you own a AndroidTokensV2 address</translation>
+        <source>Sign a message to prove you own a AndroidsTokensv2 address</source>
+        <translation>Sign a message to prove you own a AndroidsTokensv2 address</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -94,8 +94,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-14"/>
-        <source>Verify a message to ensure it was signed with a specified AndroidTokensV2 address</source>
-        <translation>Verify a message to ensure it was signed with a specified AndroidTokensV2 address</translation>
+        <source>Verify a message to ensure it was signed with a specified AndroidsTokensv2 address</source>
+        <translation>Verify a message to ensure it was signed with a specified AndroidsTokensv2 address</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -252,8 +252,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-56"/>
-        <source>AndroidTokensV2 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
-        <translation>AndroidTokensV2 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</translation>
+        <source>AndroidsTokensv2 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
+        <translation>AndroidsTokensv2 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -366,8 +366,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+4"/>
-        <source>Show information about AndroidTokensV2</source>
-        <translation>Show information about AndroidTokensV2</translation>
+        <source>Show information about AndroidsTokensv2</source>
+        <translation>Show information about AndroidsTokensv2</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -419,13 +419,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-58"/>
-        <source>Send coins to a AndroidTokensV2 address</source>
-        <translation>Send coins to a AndroidTokensV2 address</translation>
+        <source>Send coins to a AndroidsTokensv2 address</source>
+        <translation>Send coins to a AndroidsTokensv2 address</translation>
     </message>
     <message>
         <location line="+45"/>
-        <source>Modify configuration options for AndroidTokensV2</source>
-        <translation>Modify configuration options for AndroidTokensV2</translation>
+        <source>Modify configuration options for AndroidsTokensv2</source>
+        <translation>Modify configuration options for AndroidsTokensv2</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -464,8 +464,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-186"/>
-        <source>AndroidTokensV2</source>
-        <translation>AndroidTokensV2</translation>
+        <source>AndroidsTokensv2</source>
+        <translation>AndroidsTokensv2</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -474,8 +474,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+168"/>
-        <source>&amp;About AndroidTokensV2</source>
-        <translation>&amp;About AndroidTokensV2</translation>
+        <source>&amp;About AndroidsTokensv2</source>
+        <translation>&amp;About AndroidsTokensv2</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -516,15 +516,15 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+0"/>
         <location line="+60"/>
-        <source>AndroidTokensV2 client</source>
-        <translation>AndroidTokensV2 client</translation>
+        <source>AndroidsTokensv2 client</source>
+        <translation>AndroidsTokensv2 client</translation>
     </message>
     <message numerus="yes">
         <location line="+69"/>
-        <source>%n active connection(s) to AndroidTokensV2 network</source>
+        <source>%n active connection(s) to AndroidsTokensv2 network</source>
         <translation>
-            <numerusform>%n active connection to AndroidTokensV2 network</numerusform>
-            <numerusform>%n active connections to AndroidTokensV2 network</numerusform>
+            <numerusform>%n active connection to AndroidsTokensv2 network</numerusform>
+            <numerusform>%n active connections to AndroidsTokensv2 network</numerusform>
         </translation>
     </message>
     <message>
@@ -621,8 +621,8 @@ Address: %4
     <message>
         <location line="-15"/>
         <location line="+15"/>
-        <source>URI can not be parsed! This can be caused by an invalid AndroidTokensV2 address or malformed URI parameters.</source>
-        <translation>URI can not be parsed! This can be caused by an invalid AndroidTokensV2 address or malformed URI parameters.</translation>
+        <source>URI can not be parsed! This can be caused by an invalid AndroidsTokensv2 address or malformed URI parameters.</source>
+        <translation>URI can not be parsed! This can be caused by an invalid AndroidsTokensv2 address or malformed URI parameters.</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -656,8 +656,8 @@ Address: %4
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+109"/>
-        <source>A fatal error occurred. AndroidTokensV2 can no longer continue safely and will quit.</source>
-        <translation>A fatal error occurred. AndroidTokensV2 can no longer continue safely and will quit.</translation>
+        <source>A fatal error occurred. AndroidsTokensv2 can no longer continue safely and will quit.</source>
+        <translation>A fatal error occurred. AndroidsTokensv2 can no longer continue safely and will quit.</translation>
     </message>
 </context>
 <context>
@@ -722,8 +722,8 @@ Address: %4
     </message>
     <message>
         <location line="+5"/>
-        <source>The entered address &quot;%1&quot; is not a valid AndroidTokensV2 address.</source>
-        <translation>The entered address &quot;%1&quot; is not a valid AndroidTokensV2 address.</translation>
+        <source>The entered address &quot;%1&quot; is not a valid AndroidsTokensv2 address.</source>
+        <translation>The entered address &quot;%1&quot; is not a valid AndroidsTokensv2 address.</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -741,8 +741,8 @@ Address: %4
     <message>
         <location filename="../guiutil.cpp" line="+419"/>
         <location line="+12"/>
-        <source>AndroidTokensV2-Qt</source>
-        <translation>AndroidTokensV2-Qt</translation>
+        <source>AndroidsTokensv2-Qt</source>
+        <translation>AndroidsTokensv2-Qt</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -804,13 +804,13 @@ Address: %4
     </message>
     <message>
         <location line="+31"/>
-        <source>Automatically start AndroidTokensV2 after logging in to the system.</source>
-        <translation>Automatically start AndroidTokensV2 after logging in to the system.</translation>
+        <source>Automatically start AndroidsTokensv2 after logging in to the system.</source>
+        <translation>Automatically start AndroidsTokensv2 after logging in to the system.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start AndroidTokensV2 on system login</source>
-        <translation>&amp;Start AndroidTokensV2 on system login</translation>
+        <source>&amp;Start AndroidsTokensv2 on system login</source>
+        <translation>&amp;Start AndroidsTokensv2 on system login</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -829,8 +829,8 @@ Address: %4
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically open the AndroidTokensV2 client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Automatically open the AndroidTokensV2 client port on the router. This only works when your router supports UPnP and it is enabled.</translation>
+        <source>Automatically open the AndroidsTokensv2 client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Automatically open the AndroidsTokensv2 client port on the router. This only works when your router supports UPnP and it is enabled.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -839,8 +839,8 @@ Address: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the AndroidTokensV2 network through a SOCKS proxy (e.g. when connecting through Tor).</source>
-        <translation>Connect to the AndroidTokensV2 network through a SOCKS proxy (e.g. when connecting through Tor).</translation>
+        <source>Connect to the AndroidsTokensv2 network through a SOCKS proxy (e.g. when connecting through Tor).</source>
+        <translation>Connect to the AndroidsTokensv2 network through a SOCKS proxy (e.g. when connecting through Tor).</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -914,8 +914,8 @@ Address: %4
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting AndroidTokensV2.</source>
-        <translation>The user interface language can be set here. This setting will take effect after restarting AndroidTokensV2.</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting AndroidsTokensv2.</source>
+        <translation>The user interface language can be set here. This setting will take effect after restarting AndroidsTokensv2.</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -929,8 +929,8 @@ Address: %4
     </message>
     <message>
         <location line="+9"/>
-        <source>Whether to show AndroidTokensV2 addresses in the transaction list or not.</source>
-        <translation>Whether to show AndroidTokensV2 addresses in the transaction list or not.</translation>
+        <source>Whether to show AndroidsTokensv2 addresses in the transaction list or not.</source>
+        <translation>Whether to show AndroidsTokensv2 addresses in the transaction list or not.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -966,8 +966,8 @@ Address: %4
     <message>
         <location line="-9"/>
         <location line="+9"/>
-        <source>This setting will take effect after restarting AndroidTokensV2.</source>
-        <translation>This setting will take effect after restarting AndroidTokensV2.</translation>
+        <source>This setting will take effect after restarting AndroidsTokensv2.</source>
+        <translation>This setting will take effect after restarting AndroidsTokensv2.</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -985,8 +985,8 @@ Address: %4
     <message>
         <location line="+33"/>
         <location line="+183"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the AndroidTokensV2 network after a connection is established, but this process has not completed yet.</source>
-        <translation>The displayed information may be out of date. Your wallet automatically synchronizes with the AndroidTokensV2 network after a connection is established, but this process has not completed yet.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the AndroidsTokensv2 network after a connection is established, but this process has not completed yet.</source>
+        <translation>The displayed information may be out of date. Your wallet automatically synchronizes with the AndroidsTokensv2 network after a connection is established, but this process has not completed yet.</translation>
     </message>
     <message>
         <location line="-141"/>
@@ -1201,8 +1201,8 @@ Address: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the AndroidTokensV2-Qt help message to get a list with possible AndroidTokensV2 command-line options.</source>
-        <translation>Show the AndroidTokensV2-Qt help message to get a list with possible AndroidTokensV2 command-line options.</translation>
+        <source>Show the AndroidsTokensv2-Qt help message to get a list with possible AndroidsTokensv2 command-line options.</source>
+        <translation>Show the AndroidsTokensv2-Qt help message to get a list with possible AndroidsTokensv2 command-line options.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1221,13 +1221,13 @@ Address: %4
     </message>
     <message>
         <location line="-104"/>
-        <source>AndroidTokensV2 - Debug window</source>
-        <translation>AndroidTokensV2 - Debug window</translation>
+        <source>AndroidsTokensv2 - Debug window</source>
+        <translation>AndroidsTokensv2 - Debug window</translation>
     </message>
     <message>
         <location line="+25"/>
-        <source>AndroidTokensV2 Core</source>
-        <translation>AndroidTokensV2 Core</translation>
+        <source>AndroidsTokensv2 Core</source>
+        <translation>AndroidsTokensv2 Core</translation>
     </message>
     <message>
         <location line="+279"/>
@@ -1236,8 +1236,8 @@ Address: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Open the AndroidTokensV2 debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Open the AndroidTokensV2 debug log file from the current data directory. This can take a few seconds for large log files.</translation>
+        <source>Open the AndroidsTokensv2 debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Open the AndroidsTokensv2 debug log file from the current data directory. This can take a few seconds for large log files.</translation>
     </message>
     <message>
         <location line="+102"/>
@@ -1246,8 +1246,8 @@ Address: %4
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="-33"/>
-        <source>Welcome to the AndroidTokensV2 RPC console.</source>
-        <translation>Welcome to the AndroidTokensV2 RPC console.</translation>
+        <source>Welcome to the AndroidsTokensv2 RPC console.</source>
+        <translation>Welcome to the AndroidsTokensv2 RPC console.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1430,8 +1430,8 @@ Address: %4
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a valid AndroidTokensV2 address</source>
-        <translation>Enter a valid AndroidTokensV2 address </translation>
+        <source>Enter a valid AndroidsTokensv2 address</source>
+        <translation>Enter a valid AndroidsTokensv2 address </translation>
     </message>
 </context>
 <context>
@@ -1491,8 +1491,8 @@ Address: %4
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this AndroidTokensV2 address</source>
-        <translation>Sign the message to prove you own this AndroidTokensV2 address</translation>
+        <source>Sign the message to prove you own this AndroidsTokensv2 address</source>
+        <translation>Sign the message to prove you own this AndroidsTokensv2 address</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -1523,8 +1523,8 @@ Address: %4
     </message>
     <message>
         <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified AndroidTokensV2 address</source>
-        <translation>Verify the message to ensure it was signed with the specified AndroidTokensV2 address</translation>
+        <source>Verify the message to ensure it was signed with the specified AndroidsTokensv2 address</source>
+        <translation>Verify the message to ensure it was signed with the specified AndroidsTokensv2 address</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -1534,8 +1534,8 @@ Address: %4
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a valid AndroidTokensV2 address</source>
-        <translation>Enter a valid AndroidTokensV2 address</translation>
+        <source>Enter a valid AndroidsTokensv2 address</source>
+        <translation>Enter a valid AndroidsTokensv2 address</translation>
     </message>
     <message>
         <location line="-2"/>
@@ -1544,8 +1544,8 @@ Address: %4
     </message>
     <message>
         <location line="+3"/>
-        <source>Enter AndroidTokensV2 signature</source>
-        <translation>Enter AndroidTokensV2 signature</translation>
+        <source>Enter AndroidsTokensv2 signature</source>
+        <translation>Enter AndroidsTokensv2 signature</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -2115,8 +2115,8 @@ Address: %4
     <name>bitcoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="+82"/>
-        <source>AndroidTokensV2 version</source>
-        <translation>AndroidTokensV2 version</translation>
+        <source>AndroidsTokensv2 version</source>
+        <translation>AndroidsTokensv2 version</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -2145,13 +2145,13 @@ Address: %4
     </message>
     <message>
         <location line="+23"/>
-        <source>Specify configuration file (default: AndroidTokensV2.conf)</source>
-        <translation>Specify configuration file (default: AndroidTokensV2.conf)</translation>
+        <source>Specify configuration file (default: AndroidsTokensv2.conf)</source>
+        <translation>Specify configuration file (default: AndroidsTokensv2.conf)</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Specify pid file (default: AndroidTokensV2d.pid)</source>
-        <translation>Specify pid file (default: AndroidTokensV2d.pid)</translation>
+        <source>Specify pid file (default: AndroidsTokensv2d.pid)</source>
+        <translation>Specify pid file (default: AndroidsTokensv2d.pid)</translation>
     </message>
     <message>
         <location line="-47"/>
@@ -2305,8 +2305,8 @@ Address: %4
     </message>
     <message>
         <location line="+3"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong AndroidTokensV2 will not work properly.</source>
-        <translation>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong AndroidTokensV2 will not work properly.</translation>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong AndroidsTokensv2 will not work properly.</source>
+        <translation>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong AndroidsTokensv2 will not work properly.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -2540,13 +2540,13 @@ Address: %4
     </message>
     <message>
         <location line="-131"/>
-        <source>Cannot obtain a lock on data directory %s.  AndroidTokensV2 is probably already running.</source>
-        <translation>Cannot obtain a lock on data directory %s.  AndroidTokensV2 is probably already running.</translation>
+        <source>Cannot obtain a lock on data directory %s.  AndroidsTokensv2 is probably already running.</source>
+        <translation>Cannot obtain a lock on data directory %s.  AndroidsTokensv2 is probably already running.</translation>
     </message>
     <message>
         <location line="+57"/>
-        <source>AndroidTokensV2</source>
-        <translation>AndroidTokensV2</translation>
+        <source>AndroidsTokensv2</source>
+        <translation>AndroidsTokensv2</translation>
     </message>
     <message>
         <location line="+77"/>
@@ -2580,13 +2580,13 @@ Address: %4
     </message>
     <message>
         <location line="+1"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of AndroidTokensV2</source>
-        <translation>Error loading wallet.dat: Wallet requires newer version of AndroidTokensV2</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of AndroidsTokensv2</source>
+        <translation>Error loading wallet.dat: Wallet requires newer version of AndroidsTokensv2</translation>
     </message>
     <message>
         <location line="+73"/>
-        <source>Wallet needed to be rewritten: restart AndroidTokensV2 to complete</source>
-        <translation>Wallet needed to be rewritten: restart AndroidTokensV2 to complete</translation>
+        <source>Wallet needed to be rewritten: restart AndroidsTokensv2 to complete</source>
+        <translation>Wallet needed to be rewritten: restart AndroidsTokensv2 to complete</translation>
     </message>
     <message>
         <location line="-75"/>
@@ -2655,8 +2655,8 @@ Address: %4
     </message>
     <message>
         <location line="-25"/>
-        <source>Unable to bind to %s on this computer. AndroidTokensV2 is probably already running.</source>
-        <translation>Unable to bind to %s on this computer. AndroidTokensV2 is probably already running.</translation>
+        <source>Unable to bind to %s on this computer. AndroidsTokensv2 is probably already running.</source>
+        <translation>Unable to bind to %s on this computer. AndroidsTokensv2 is probably already running.</translation>
     </message>
     <message>
         <location line="+55"/>

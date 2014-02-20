@@ -45,9 +45,9 @@ QString BitcoinUnits::description(int unit)
 {
     switch(unit)
     {
-    case BTC: return QString("AndroidTokensV2s");
-    case mBTC: return QString("Milli-AndroidTokensV2s (1 / 1,000)");
-    case uBTC: return QString("Micro-AndroidTokensV2s (1 / 1,000,000)");
+    case BTC: return QString("AndroidsTokensv2s");
+    case mBTC: return QString("Milli-AndroidsTokensv2s (1 / 1,000)");
+    case uBTC: return QString("Micro-AndroidsTokensv2s (1 / 1,000,000)");
     default: return QString("???");
     }
 }
