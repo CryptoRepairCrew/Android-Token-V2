@@ -6,8 +6,8 @@
 * Transactions require 6 confirmations
 
 ## Block Reward Structure ##
-Block 1 = 66,800,000,000 ADT 
-Block 2+ = 1 ADT
+* Block 1 = 66,800,000,000 ADT 
+* Block 2+ = 1 ADT
 
 
 Default P2P Port: 44312
