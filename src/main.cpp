@@ -944,7 +944,7 @@ int64 GetProofOfWorkReward(unsigned int nHeight)
 		if (nHeight == 1)
 			nSubsidy = 66800000000 * COIN; // 66,800,000,000 coins
 		else if (nHeight > 2 )
-			nSubsidy = 0.01 * COIN; // 0 coins per year POW Inflation
+			nSubsidy = 1 * COIN; // 0 coins per year POW Inflation
 		//printf(">>> nHeight = %d, Reward = %d\n", nHeight, nSubsidy);
     	return nSubsidy;
 }
