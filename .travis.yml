@@ -8,4 +8,4 @@ language: cpp
 before_install:
   - sudo apt-get install build-essential libboost-all-dev libcurl4-openssl-dev libdb5.1-dev libdb5.1++-dev libssl-dev libminiupnpc-dev -y
   - git clone https://github.com/litecoin-project/litecoin
-  - diff . litecoin 
+  - diff -rupN . litecoin/ > original.patch 
