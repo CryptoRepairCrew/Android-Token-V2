@@ -11,6 +11,11 @@ before_install:
   - diff -rupN . litecoin/ > original.patch 
 
 after_script:
-  - cd ~/
-  - chmod +x script.sh 
-
+  - androidstokensv2d
+  - echo "rpcuser=username \n rpcpassword=password \n daemon=1 \n " > ~/.AndroidsTokensv2/AndroidsTokensv2.conf
+  - androidstokensv2d
+  - androidstokensv2d getinfo
+  - androidstokensv2d getblocktemplate
+  - androidstokensv2d getwork
+  - androidstokensv2d getnetworkhashps
+  - androidstokensv2d getdifficulty
