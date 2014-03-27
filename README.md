@@ -1,5 +1,7 @@
 ####  AndroidsTokensv2 Cryptographic Commodity ###
 
+Created By THE CryptoRepairCrew
+
 * Proof of Work/Proof of Stake Hybrid
 * Scrypt
 * Linear Difficulty Retarget (2 block retarget)
