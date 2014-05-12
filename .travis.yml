@@ -1,4 +1,4 @@
-script: make -f makefile.unix
+script: make -f makefile.unix -j 3
 
 install:
   - cd src
