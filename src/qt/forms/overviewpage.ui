@@ -226,10 +226,29 @@
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>40</height>
+         <height>20</height>
         </size>
        </property>
       </spacer>
+     </item>
+    <item>
+      <widget class="QLabel" name="label_61">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="../bitcoin.qrc">:/images/backg</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>false</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="margin">
+        <number>2</number>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -318,6 +337,13 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="unlockWalletButton">
+       <property name="text">
+        <string>Unlock Wallet</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

@@ -512,12 +512,11 @@ bool CTransaction::CheckTransaction() const
 }
 
 int64 CTransaction::GetMinFee(unsigned int nBlockSize, bool fAllowFree,
-                              enum GetMinFee_mode mode) const
+                              enum GetMinFee_mode mode, unsigned int nBytes) const
 {
     // Base fee is either MIN_TX_FEE or MIN_RELAY_TX_FEE
     int64 nBaseFee = (mode == GMF_RELAY) ? MIN_RELAY_TX_FEE : MIN_TX_FEE;
 
-    unsigned int nBytes = ::GetSerializeSize(*this, SER_NETWORK, PROTOCOL_VERSION);
     unsigned int nNewBlockSize = nBlockSize + nBytes;
     int64 nMinFee = (1 + (int64)nBytes / 1000) * nBaseFee;
 
@@ -633,7 +632,7 @@ bool CTxMemPool::accept(CTxDB& txdb, CTransaction &tx, bool fCheckInputs,
         unsigned int nSize = ::GetSerializeSize(tx, SER_NETWORK, PROTOCOL_VERSION);
 
         // Don't accept it if it can't get into a block
-        int64 txMinFee = tx.GetMinFee(1000, false, GMF_RELAY);
+        int64 txMinFee = tx.GetMinFee(1000, false, GMF_RELAY, nSize);
         if (nFees < txMinFee)
             return error("CTxMemPool::accept() : not enough fees %s, %"PRI64d" < %"PRI64d,
                          hash.ToString().c_str(),
@@ -943,8 +942,12 @@ int64 GetProofOfWorkReward(unsigned int nHeight)
 
 		if (nHeight == 1)
 			nSubsidy = 66800000000 * COIN; // 66,800,000,000 coins
-		else if (nHeight >= 2 )
-			nSubsidy = 1 * COIN; // 0 coins per year POW Inflation
+		// else if (nHeight >= 2 )
+	        //      nSubsidy = 1 * COIN; // 0 coins per year POW Inflation
+                // end PoW before someone gets hurt
+                else if (nHeight < 144530)
+                   nSubsidy = 1 * COIN;
+                   
 		//printf(">>> nHeight = %d, Reward = %d\n", nHeight, nSubsidy);
     	return nSubsidy;
 }
@@ -1017,9 +1020,14 @@ static const int64 nTargetSpacingWorkMax = 12 * nStakeTargetSpacing; // 12 minut
 // minimum amount of work that could possibly be required nTime after
 // minimum work required was nBase
 //
-unsigned int ComputeMinWork(unsigned int nBase, int64 nTime)
+unsigned int ComputeMinWork(unsigned int nBase, int64 nTime, bool fProofOfStake)
 {
-    CBigNum bnTargetLimit = bnProofOfWorkLimit;
+    CBigNum bnTargetLimit;
+    if (fProofOfStake) {
+         bnTargetLimit = bnProofOfStakeLimit;
+    } else {
+         bnTargetLimit = bnProofOfWorkLimit;
+    }
 
     CBigNum bnResult;
     bnResult.SetCompact(nBase);
@@ -2052,7 +2060,6 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot) const
 
     // Check coinbase reward
     int64 nTimeBlock = GetBlockTime();
-    CBlockIndex* pindexPrev = pindexBest;
     if (nTimeBlock < REWARD_SWITCH_TIME) {
 		if (vtx[0].GetValueOut() > (IsProofOfWork()? MAX_MINT_PROOF_OF_WORK_LEGACY : 0))
 		    return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s",
@@ -2231,12 +2238,26 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
         CBigNum bnNewBlock;
         bnNewBlock.SetCompact(pblock->nBits);
         CBigNum bnRequired;
-        bnRequired.SetCompact(ComputeMinWork(GetLastBlockIndex(pcheckpoint, pblock->IsProofOfStake())->nBits, deltaTime));
+        bnRequired.SetCompact(ComputeMinWork(
+                                 GetLastBlockIndex(pcheckpoint,
+                                                   pblock->IsProofOfStake())->nBits,
+                                                   deltaTime,
+                                                   pblock->IsProofOfStake()));
         if (bnNewBlock > bnRequired)
         {
             if (pfrom)
                 pfrom->Misbehaving(100);
-            return error("ProcessBlock() : block with too little %s", pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work");
+            printf("Too little %s: (%s > %s)\n",
+                               pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work",
+                   bnNewBlock.ToString().c_str(), bnRequired.ToString().c_str());
+            printf("Block %s:", hash.ToString().c_str());
+            return error("ProcessBlock() : block with too little %s",
+                               pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work");
+        } else {
+            printf("Enough %s: (%s <= %s)\n",
+                               pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work",
+                   bnNewBlock.ToString().c_str(), bnRequired.ToString().c_str());
+            printf("Block %s:", hash.ToString().c_str());
         }
     }
 
@@ -3384,7 +3405,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         CBlock block;
         vRecv >> block;
 
-        printf("received block %s\n", block.GetHash().ToString().substr(0,20).c_str());
+        printf("received block %s\n", block.GetHash().ToString().c_str());
         // block.print();
 
         CInv inv(MSG_BLOCK, block.GetHash());

@@ -69,6 +69,25 @@ Value getpeerinfo(const Array& params, bool fHelp)
     return ret;
 }
 
+Value addnode(const Array& params, bool fHelp)
+
+{
+    string strCommand;
+    if (fHelp || params.size() != 1)
+        throw runtime_error(
+            "addnode <node>\n"
+            "Attempts to try a connection to a node once.\n"
+            "\nExample:\n"
+            "addnode 192.168.0.6:8333"
+        );
+
+    string strNode = params[0].get_str();
+
+    CAddress addr;
+    ConnectNode(addr, strNode.c_str());
+    return Value::null;
+}
+
 extern CCriticalSection cs_mapAlerts;
 extern map<uint256, CAlert> mapAlerts;
  
