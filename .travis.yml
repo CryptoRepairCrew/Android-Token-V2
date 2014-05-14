@@ -10,6 +10,7 @@ script:
  - make test
  - cd ..
  - qmake USE_UPNP=-
+ - make
  
 notifications:
   irc:
