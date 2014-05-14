@@ -19,6 +19,7 @@ TEMPLATE = app
 TARGET = AndroidsTokensv2-qt
 VERSION = 0.7.2
 INCLUDEPATH += src src/json src/qt
+
 win32 {
    contains(WINBITS, 32) {
       INCLUDEPATH += C:/$$MSYS/local/include/boost-1_55/
@@ -245,9 +246,13 @@ HEADERS += src/qt/bitcoingui.h \
     src/qt/rpcconsole.h \
     src/version.h \
     src/netbase.h \
-    src/clientversion.h
+    src/clientversion.h\
+    src/coincontrol.h\
+    src/qt/coincontroldialog.h \
+    src/qt/coincontroltreewidget.h
 
 SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
+    src/qt/coincontroltreewidget.cpp \
     src/qt/transactiontablemodel.cpp \
     src/qt/addresstablemodel.cpp \
     src/qt/optionsdialog.cpp \
@@ -257,6 +262,8 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/qt/aboutdialog.cpp \
     src/qt/editaddressdialog.cpp \
     src/qt/bitcoinaddressvalidator.cpp \
+    src/qt/coincontroldialog.cpp\
+    src/coincontrol.h\
     src/alert.cpp \
     src/version.cpp \
     src/sync.cpp \
@@ -317,6 +324,7 @@ RESOURCES += \
 
 FORMS += \
     src/qt/forms/sendcoinsdialog.ui \
+    src/qt/forms/coincontroldialog.ui \
     src/qt/forms/addressbookpage.ui \
     src/qt/forms/signverifymessagedialog.ui \
     src/qt/forms/aboutdialog.ui \
