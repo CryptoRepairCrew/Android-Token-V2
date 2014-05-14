@@ -1,5 +1,9 @@
 language: cpp
- 
+
+compiler:
+  - clang
+  - gcc
+  
 before_install:
   - sudo apt-get install build-essential libboost-all-dev libcurl4-openssl-dev libdb5.1-dev libdb5.1++-dev libssl-dev libminiupnpc-dev libqrencode-dev libglib2.0-dev libglibmm-2.4-dev libqt4-dev python-dev qt4-dev-tools libqt4-dev libqt4-core libqt4-gui 
 install:
@@ -18,3 +22,5 @@ notifications:
       - "chat.freenode.net#cryptopools"
     template:
       - "%{repository}/%{branch} (%{commit} - %{author}): %{message}"
+      - "Change view : %{compare_url}"
+      - "Build details : %{build_url}"
