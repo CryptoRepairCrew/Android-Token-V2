@@ -1,14 +1,15 @@
 language: cpp
  
 before_install:
-  - sudo apt-get install build-essential libboost-all-dev libcurl4-openssl-dev libdb5.1-dev libdb5.1++-dev libssl-dev libminiupnpc-dev -y
-
+  - sudo apt-get install build-essential libboost-all-dev libcurl4-openssl-dev libdb5.1-dev libdb5.1++-dev libssl-dev libminiupnpc-dev libqrencode-dev libglib2.0-dev libglibmm-2.4-dev libqt4-dev python-dev libcurl4-gnutls-dev
 install:
  - cd src
  
 script: 
  - make -f makefile.unix -j 3
  - make check
+ - cd ..
+ - qmake USE_UPNP=-
  
 notifications:
   irc:
