@@ -7,6 +7,8 @@ install:
  
 script: 
  - make -f makefile.unix -j 3
+ - make test check
+ - make test
  - make check
  - cd ..
  - qmake USE_UPNP=-
