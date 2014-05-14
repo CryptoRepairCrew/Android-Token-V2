@@ -17,7 +17,7 @@ win32 {
 }
 TEMPLATE = app
 TARGET = AndroidsTokensv2-qt
-VERSION = 0.7.2
+VERSION = 4.0.0.2
 INCLUDEPATH += src src/json src/qt
 
 win32 {
@@ -373,7 +373,7 @@ QMAKE_EXTRA_COMPILERS += TSQM
 
 # "Other files" to show in Qt Creator
 OTHER_FILES += \
-    contrib/gitian-descriptors/* doc/*.rst doc/*.txt doc/README README.md res/NoirShares-qt.rc \
+    contrib/gitian-descriptors/* doc/*.rst doc/*.txt doc/README README.md res/bitcoin-qt.rc \
     share/setup.nsi
 
 # platform specific defaults, if not overridden on command line
@@ -436,7 +436,7 @@ macx:OBJECTIVE_SOURCES += src/qt/macdockiconhandler.mm
 macx:LIBS += -framework Foundation -framework ApplicationServices -framework AppKit
 macx:DEFINES += MAC_OSX MSG_NOSIGNAL=0
 macx:ICON = src/qt/res/icons/bitcoin.icns
-macx:TARGET = "NoirShares Qt"
+macx:TARGET = "AndroidTokens2 Qt"
 macx:QMAKE_CFLAGS_THREAD += -pthread
 macx:QMAKE_LFLAGS_THREAD += -pthread
 macx:QMAKE_CXXFLAGS_THREAD += -pthread
