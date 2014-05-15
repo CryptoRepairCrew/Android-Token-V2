@@ -48,10 +48,6 @@ inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= MAX_MONE
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
 static const unsigned int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC
 
-// apply two rules for target limits because of, well, moving targets
-// checkpoints ensure that prior blocks are valid even if the nominal TL is not
-static const int TL_SWITCHOVER = 66000;
-
 #ifdef USE_UPNP
 static const int fHaveUPnP = true;
 #else
