@@ -154,7 +154,7 @@ contains(BITCOIN_NEED_QT_PLUGINS, 1) {
 
 !win32:!macx {
     QMAKE_LFLAGS *= -static
-    QMAKE_LFLAGS *= -Wl,--large-address-aware
+    QMAKE_LFLAGS *= -Wl
 }
 
 # regenerate src/build.h
