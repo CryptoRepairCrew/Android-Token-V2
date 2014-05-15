@@ -17,7 +17,7 @@ win32 {
 }
 TEMPLATE = app
 TARGET = AndroidsTokensv2-qt
-VERSION = 4.0.0.2
+VERSION = 2.0.1.1
 INCLUDEPATH += src src/json src/qt
 
 win32 {
