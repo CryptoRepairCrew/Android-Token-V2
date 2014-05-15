@@ -2,7 +2,7 @@
 #include "ui_coincontroldialog.h"
 
 #include "init.h"
-#include "BitcoinUnits.h"
+#include "bitcoinunits.h"
 #include "walletmodel.h"
 #include "addresstablemodel.h"
 #include "optionsmodel.h"
