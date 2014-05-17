@@ -20,6 +20,9 @@ TARGET = AndroidsTokensv2-qt
 VERSION = 2.0.1.1
 INCLUDEPATH += src src/json src/qt
 
+QT += core gui
+
+
 win32 {
    contains(WINBITS, 32) {
       INCLUDEPATH += C:/$$MSYS/local/include/boost-1_55/
