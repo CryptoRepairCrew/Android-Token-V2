@@ -4351,7 +4351,7 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
     {
         if (fShutdown)
             return;
-        while (vNodes.empty() || IsInitialBlockDownload())
+     	while (vNodes.empty() || IsInitialBlockDownload() || (fProofOfStake && vNodes.size() < 3 && nBestHeight < GetNumBlocksOfPeers()))
         {
             Sleep(1000);
             if (fShutdown)
