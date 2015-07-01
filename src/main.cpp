@@ -41,8 +41,10 @@ static CBigNum bnProofOfStakeHardLimit(~uint256(0) >> 30); // disabled temporari
 static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 16);
 static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 
-unsigned int nStakeMinAge = 60 * 60 * 24 * 15;	// minimum age for coin age: 15d
-unsigned int nStakeMaxAge = 60 * 60 * 24 * 60;	// stake age of full weight: 30d
+unsigned int nStakeMinAgeV1 = 60 * 60 * 24 * 15; // minimum age for coin age: 15d
+unsigned int nStakeMinAgeV2 = 60 * 60 * 4;       // New Minimium age: Every 4 hours
+unsigned int nStakeMaxAgeV1 = 60 * 60 * 24 * 60; // stake age of full weight: 30d
+unsigned int nStakeMaxAgeV2 = 60 * 60 * 24 * 7;  // New Maximum age: Every Week
 unsigned int nStakeTargetSpacing = 1 * 30;	// 30 sec block spacing
 int64 nChainStartTime = 1392697006;
 int nCoinbaseMaturity = 5;
@@ -1014,18 +1016,10 @@ static const int64 nTargetTimespan = 0.16 * 24 * 60 * 60; // 0.16 of a day
 static const int64 nTargetSpacingWorkMax = 12 * nStakeTargetSpacing; // 12 minutes
 
 //
-// minimum amount of work that could possibly be required nTime after
-// minimum work required was nBase
+// Maximum nBits value could possible be required nTime after
 //
-unsigned int ComputeMinWork(unsigned int nBase, int64 nTime, bool fProofOfStake)
+unsigned int ComputeMaxBits(CBigNum bnTargetLimit, unsigned int nBase, int64 nTime)
 {
-    CBigNum bnTargetLimit;
-    if (fProofOfStake) {
-         bnTargetLimit = bnProofOfStakeLimit;
-    } else {
-         bnTargetLimit = bnProofOfWorkLimit;
-    }
-
     CBigNum bnResult;
     bnResult.SetCompact(nBase);
     bnResult *= 2;
@@ -1040,6 +1034,24 @@ unsigned int ComputeMinWork(unsigned int nBase, int64 nTime, bool fProofOfStake)
     return bnResult.GetCompact();
 }
 
+//
+// minimum amount of work that could possibly be required nTime after
+// minimum proof-of-work required was nBase
+//
+unsigned int ComputeMinWork(unsigned int nBase, int64 nTime)
+{
+    return ComputeMaxBits(bnProofOfWorkLimit, nBase, nTime);
+}
+
+//
+// minimum amount of stake that could possibly be required nTime after
+// minimum proof-of-stake required was nBase
+//
+unsigned int ComputeMinStake(unsigned int nBase, int64 nTime, unsigned int nBlockTime)
+{
+    return ComputeMaxBits(bnProofOfStakeLimit, nBase, nTime);
+}
+
 // ppcoin: find last block index up to pindex
 const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfStake)
 {
@@ -1050,21 +1062,7 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
 
 unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
-    CBigNum bnTargetLimit = bnProofOfWorkLimit;
-
-    if(fProofOfStake)
-    {
-        // Proof-of-Stake blocks has own target limit since nVersion=3 supermajority on mainNet and always on testNet
-        if(fTestNet)
-            bnTargetLimit = bnProofOfStakeLimit;
-        else
-        {
-            if(pindexLast->nHeight + 1 > 15000)
-                bnTargetLimit = bnProofOfStakeLimit;
-            else if(pindexLast->nHeight + 1 > 14060)
-                bnTargetLimit = bnProofOfStakeHardLimit;
-        }
-    }
+    CBigNum bnTargetLimit = !fProofOfStake ? bnProofOfWorkLimit : bnProofOfStakeLimit;
 
     if (pindexLast == NULL)
         return bnTargetLimit.GetCompact(); // genesis block
@@ -1784,7 +1782,7 @@ bool CBlock::SetBestChain(CTxDB& txdb, CBlockIndex* pindexNew)
         while (pindexIntermediate->pprev && pindexIntermediate->pprev->bnChainTrust > pindexBest->bnChainTrust)
         {
             vpindexSecondary.push_back(pindexIntermediate);
-            pindexIntermediate = pindexIntermediate->pprev;
+                pindexIntermediate = pindexIntermediate->pprev;
         }
 
         if (!vpindexSecondary.empty())
@@ -1888,6 +1886,7 @@ bool CTransaction::GetCoinAge(CTxDB& txdb, uint64& nCoinAge) const
         CTxIndex txindex;
         if (!txPrev.ReadFromDisk(txdb, txin.prevout, txindex))
             continue;  // previous transaction not in main chain
+
         if (nTime < txPrev.nTime)
             return false;  // Transaction timestamp violation
 
@@ -1895,8 +1894,11 @@ bool CTransaction::GetCoinAge(CTxDB& txdb, uint64& nCoinAge) const
         CBlock block;
         if (!block.ReadFromDisk(txindex.pos.nFile, txindex.pos.nBlockPos, false))
             return false; // unable to read block of previous transaction
+
+        unsigned int nStakeMinAge = GetAdjustedTime() >= V2_SWITCHOVER_TIME ? nStakeMinAgeV1 : nStakeMinAgeV2;
+
         if (block.GetBlockTime() + nStakeMinAge > nTime)
-            continue; // only count coins meeting min age requirement
+                continue; // only count coins meeting min age requirement
 
         int64 nValueIn = txPrev.vout[txin.prevout.n].nValue;
         bnCentSecond += CBigNum(nValueIn) * (nTime-txPrev.nTime) / CENT;
@@ -2183,6 +2185,26 @@ bool CBlock::AcceptBlock()
     return true;
 }
 
+CBigNum CBlockIndex::GetBlockTrust() const
+{
+    CBigNum bnTarget;
+    bnTarget.SetCompact(nBits);
+    if (bnTarget <= 0)
+        return 0;
+
+    if (IsProofOfStake())
+    {
+        // Return trust score as usual
+        return (CBigNum(1)<<256) / (bnTarget+1);
+    }
+    else
+    {
+        // Calculate work amount for block
+        CBigNum bnPoWTrust = (bnProofOfWorkLimit / (bnTarget+1));
+        return bnPoWTrust > 0 ? bnPoWTrust : 1;
+    }
+}
+
 bool CBlockIndex::IsSuperMajority(int minVersion, const CBlockIndex* pstart, unsigned int nRequired, unsigned int nToCheck)
 {
     unsigned int nFound = 0;
@@ -2235,11 +2257,12 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
         CBigNum bnNewBlock;
         bnNewBlock.SetCompact(pblock->nBits);
         CBigNum bnRequired;
-        bnRequired.SetCompact(ComputeMinWork(
-                                 GetLastBlockIndex(pcheckpoint,
-                                                   pblock->IsProofOfStake())->nBits,
-                                                   deltaTime,
-                                                   pblock->IsProofOfStake()));
+
+        if (pblock->IsProofOfStake())
+            bnRequired.SetCompact(ComputeMinStake(GetLastBlockIndex(pcheckpoint, true)->nBits, deltaTime, pblock->nTime));
+        else
+            bnRequired.SetCompact(ComputeMinWork(GetLastBlockIndex(pcheckpoint, false)->nBits, deltaTime));
+
         if (bnNewBlock > bnRequired)
         {
             if (pfrom)
@@ -2513,7 +2536,8 @@ bool LoadBlockIndex(bool fAllowNew)
 
         bnProofOfStakeLimit = bnProofOfStakeLimitTestNet; // 0x00000fff PoS base target is fixed in testnet
         bnProofOfWorkLimit = bnProofOfWorkLimitTestNet; // 0x0000ffff PoW base target is fixed in testnet
-        nStakeMinAge = 2 * 60 * 60; // test net min age is 2 hours
+        nStakeMinAgeV1 = 2 * 60 * 60; // test net min age is 2 hours
+        nStakeMinAgeV2 = 2 * 60;
         nModifierInterval = 20 * 60; // test modifier interval is 20 minutes
         nCoinbaseMaturity = 10; // test maturity is 10 blocks
         nStakeTargetSpacing = 3 * 60; // test block spacing is 3 minutes
@@ -3251,9 +3275,11 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
                 printf("  getblocks stopping at %d %s\n", pindex->nHeight, pindex->GetBlockHash().ToString().substr(0,20).c_str());
                 // ppcoin: tell downloading node about the latest block if it's
                 // without risk being rejected due to stake connection check
+                unsigned int nStakeMinAge = GetAdjustedTime() >= V2_SWITCHOVER_TIME ? nStakeMinAgeV1 : nStakeMinAgeV2;
+
                 if (hashStop != hashBestChain && pindex->GetBlockTime() + nStakeMinAge > pindexBest->GetBlockTime())
-                    pfrom->PushInventory(CInv(MSG_BLOCK, hashBestChain));
-                break;
+                        pfrom->PushInventory(CInv(MSG_BLOCK, hashBestChain));
+                        break;
             }
             pfrom->PushInventory(CInv(MSG_BLOCK, pindex->GetBlockHash()));
             if (--nLimit <= 0)
@@ -4335,6 +4361,7 @@ static int nLimitProcessors = -1;
 
 void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
 {
+
     void *scratchbuf = scrypt_buffer_alloc();
 
     printf("CPUMiner started for proof-of-%s\n", fProofOfStake? "stake" : "work");
@@ -4423,7 +4450,6 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
         unsigned int max_nonce = 0xffff0000;
         block_header res_header;
         uint256 result;
-
         loop
         {
             unsigned int nHashesDone = 0;
@@ -4459,6 +4485,7 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
                     break;
                 }
             }
+
 
             // Meter hashes/sec
             static int64 nHashCounter;

@@ -9,7 +9,8 @@
 
 using namespace std;
 
-extern int nStakeMaxAge;
+extern int nStakeMaxAgeV1;
+extern int nStakeMaxAgeV2;
 extern int nStakeTargetSpacing;
 
 // Modifier interval: time to elapse before new modifier is computed
@@ -218,7 +219,9 @@ static bool GetKernelStakeModifier(uint256 hashBlockFrom, uint64& nStakeModifier
     while (nStakeModifierTime < pindexFrom->GetBlockTime() + nStakeModifierSelectionInterval)
     {
         if (!pindex->pnext)
-        {   // reached best block; may happen if node is behind on block chain
+        {
+            unsigned int nStakeMinAge = GetAdjustedTime() >= V2_SWITCHOVER_TIME ? nStakeMinAgeV1 : nStakeMinAgeV2;
+            // reached best block; may happen if node is behind on block chain
             if (fPrintProofOfStake || (pindex->GetBlockTime() + nStakeMinAge - nStakeModifierSelectionInterval > GetAdjustedTime()))
                 return error("GetKernelStakeModifier() : reached best block %s at height %d from block %s",
                     pindex->GetBlockHash().ToString().c_str(), pindex->nHeight, hashBlockFrom.ToString().c_str());
@@ -265,6 +268,7 @@ bool CheckStakeKernelHash(unsigned int nBits, const CBlock& blockFrom, unsigned 
         return error("CheckStakeKernelHash() : nTime violation");
 
     unsigned int nTimeBlockFrom = blockFrom.GetBlockTime();
+    unsigned int nStakeMinAge = GetAdjustedTime() >= V2_SWITCHOVER_TIME ? nStakeMinAgeV2 : nStakeMinAgeV1;
     if (nTimeBlockFrom + nStakeMinAge > nTimeTx) // Min age requirement
         return error("CheckStakeKernelHash() : min age violation");
 
@@ -275,6 +279,7 @@ bool CheckStakeKernelHash(unsigned int nBits, const CBlock& blockFrom, unsigned 
     // v0.3 protocol kernel hash weight starts from 0 at the 30-day min age
     // this change increases active coins participating the hash and helps
     // to secure the network when proof-of-stake difficulty is low
+    unsigned int nStakeMaxAge = GetAdjustedTime() >= V2_SWITCHOVER_TIME ? nStakeMaxAgeV2 : nStakeMaxAgeV1;
     int64 nTimeWeight = min((int64)nTimeTx - txPrev.nTime, (int64)nStakeMaxAge) - nStakeMinAge;
     CBigNum bnCoinDayWeight = CBigNum(nValueIn) * nTimeWeight / COIN / (24 * 60 * 60);
 

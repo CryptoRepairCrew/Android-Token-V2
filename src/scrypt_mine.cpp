@@ -1,3 +1,4 @@
+
 /*-
  * Copyright 2009 Colin Percival, 2011 ArtForz, 2011 pooler, 2013 Balthazar
  * All rights reserved.
@@ -29,7 +30,6 @@
 
 #include <stdlib.h>
 #include <stdint.h>
-#include <xmmintrin.h>
 
 #include "scrypt_mine.h"
 #include "pbkdf2.h"

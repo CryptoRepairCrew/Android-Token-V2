@@ -14,7 +14,8 @@
 #include <boost/algorithm/string/replace.hpp>
 
 using namespace std;
-extern int nStakeMaxAge;
+extern int nStakeMaxAgeV1;
+extern int nStakeMaxAgeV2;
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1432,6 +1433,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
         if (!block.ReadFromDisk(txindex.pos.nFile, txindex.pos.nBlockPos, false))
             continue;
         static int nMaxStakeSearchInterval = 60;
+        unsigned int nStakeMinAge = GetAdjustedTime() > V2_SWITCHOVER_TIME ? nStakeMinAgeV1 : nStakeMinAgeV2;
         if (block.GetBlockTime() + nStakeMinAge > txNew.nTime - nMaxStakeSearchInterval)
             continue; // only count coins meeting min age requirement
 
@@ -1518,6 +1520,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
             if (pcoin.first->vout[pcoin.second].nValue > nCombineThreshold)
                 continue;
             // Do not add input that is still too young
+            unsigned int nStakeMaxAge = GetAdjustedTime() >= V2_SWITCHOVER_TIME ? nStakeMaxAgeV2 : nStakeMaxAgeV1;
             if (pcoin.first->nTime + nStakeMaxAge > txNew.nTime)
                 continue;
             txNew.vin.push_back(CTxIn(pcoin.first->GetHash(), pcoin.second));

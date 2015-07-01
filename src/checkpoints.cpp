@@ -361,6 +361,8 @@ namespace Checkpoints
         // sync-checkpoint should always be accepted block
         assert(mapBlockIndex.count(hashSyncCheckpoint));
         const CBlockIndex* pindexSync = mapBlockIndex[hashSyncCheckpoint];
+        unsigned int nStakeMinAge = GetAdjustedTime() >= V2_SWITCHOVER_TIME ? nStakeMinAgeV2 : nStakeMinAgeV1;
+
         return (nBestHeight >= pindexSync->nHeight + nCoinbaseMaturity ||
                 pindexSync->GetBlockTime() + nStakeMinAge < GetAdjustedTime());
     }

@@ -1,47 +1,24 @@
-# figure out windows
-win32 {
-    contains(QMAKE_HOST.arch, x86_64) {
-        message("x86_64 64-bit build")
-        WINBITS = 64
-    } else {
-        message("x86 32-bit build")
-        WINBITS = 32
-    }
-}
-win32 {
-   contains(WINBITS, 32) {
-     MSYS = MinGW/msys/1.0
-   } else {
-     MSYS = mingw64/msys
-   }
-}
 TEMPLATE = app
 TARGET = AndroidsTokensv2-qt
 VERSION = 2.0.1.1
 INCLUDEPATH += src src/json src/qt
-
-QT += core gui
-
-
-win32 {
-   contains(WINBITS, 32) {
-      INCLUDEPATH += C:/$$MSYS/local/include/boost-1_55/
-   } else {
-      INCLUDEPATH += C:/$$MSYS/local/include/boost-1_55/
-   }
-}
-win32:INCLUDEPATH += C:/$$MSYS/local/include
-win32:INCLUDEPATH += C:/$$MSYS/local/ssl/include
-
-win32:contains(WINBITS, 64) {
-   INCLUDEPATH += C:/$$MSYS/local/BerkeleyDB.4.8/include
-}
-
-DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE \
-           BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN __NO_SYSTEM_INCLUDES
+DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE USE_IPV6
 CONFIG += no_include_pwd
 
-!macx:CONFIG += static
+windows:LIBS += -lshlwapi
+LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
+LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
+windows:LIBS += -lws2_32 -lole32 -loleaut32 -luuid -lgdi32 -static-libgcc -static-libstdc++
+LIBS += -lboost_system-mgw47-mt-s-1_55 -lboost_filesystem-mgw47-mt-s-1_55 -lboost_program_options-mgw47-mt-s-1_55 -lboost_thread-mgw47-mt-s-1_55
+BOOST_LIB_SUFFIX=-mgw47-mt-s-1_55
+BOOST_INCLUDE_PATH=C:/coindeps/gcc47/boost
+BOOST_LIB_PATH=C:/coindeps/gcc47/boost/stage/lib
+BDB_INCLUDE_PATH=c:/coindeps/gcc47/db/build_unix
+BDB_LIB_PATH=c:/coindeps/gcc47/db/build_unix
+OPENSSL_INCLUDE_PATH=c:/coindeps/gcc47/shitssl/include
+OPENSSL_LIB_PATH=c:/coindeps/gcc47/shitssl/lib
+MINIUPNPC_LIB_PATH=c:/coindeps/gcc47/miniupnpc-1.9
+MINIUPNPC_INCLUDE_PATH=c:/coindeps/gcc47/miniupnpc-1.9
 
 # for boost 1.37, add -mt to the boost libraries
 # use: qmake BOOST_LIB_SUFFIX=-mt
@@ -59,52 +36,25 @@ UI_DIR = build
 
 # use: qmake "RELEASE=1"
 contains(RELEASE, 1) {
-    # Mac: ensure compatibility with at least 10.7, 64 bit
-    macx:XXFLAGS += -mmacosx-version-min=10.7 -arch x86_64 \
-                    -isysroot /Developer/SDKs/MacOSX10.7.sdk
-    !win32:!macx {
+    # Mac: compile for maximum compatibility (10.5, 32-bit)
+    macx:QMAKE_CXXFLAGS += -mmacosx-version-min=10.5 -arch i386 -isysroot /Developer/SDKs/MacOSX10.5.sdk
+    macx:QMAKE_CFLAGS += -mmacosx-version-min=10.5 -arch i386 -isysroot /Developer/SDKs/MacOSX10.5.sdk
+    macx:QMAKE_LFLAGS += -mmacosx-version-min=10.5 -arch i386 -isysroot /Developer/SDKs/MacOSX10.5.sdk
+
+    !windows:!macx {
         # Linux: static link
         LIBS += -Wl,-Bstatic
     }
 }
 
-# OS X is never static
-# macx:mystaticconfig {
-#   QMAKE_LIBS_QT =
-#   QMAKE_LIBS_QT_THREAD =
-#   LIBS += $(QTDIR)/lib/libqt.a -lz -framework Carbon
-#   LIBS += /usr/local/lib/libqrencode.3.dylib
-#   CONFIG += mystaticconfig
-# }
-
-# bug in gcc 4.4 breaks some pointer code
-# QMAKE_CXXFLAGS += -fno-strict-aliasing
-# bug in gcc 4.4 breaks some pointer code
-# QMAKE_CXXFLAGS += -fno-strict-aliasing
-    win32:contains(WINBITS, 32) {
-      # can have strict aliasing if opt is 0
-      QMAKE_CXXFLAGS_RELEASE -= -O2
-      QMAKE_CXXFLAGS_RELEASE += -O0
-}
-
-
-USE_QRCODE=1
 # use: qmake "USE_QRCODE=1"
 # libqrencode (http://fukuchi.org/works/qrencode/index.en.html) must be installed for support
 contains(USE_QRCODE, 1) {
     message(Building with QRCode support)
     DEFINES += USE_QRCODE
-    win32:contains(WINBITS, 32) {
-       INCLUDEPATH += C:/qrencode-3.4.3
-       LIBS += -L"C:/qrencode-3.4.3"
-    }
-    macx:LIBS += /usr/local/lib/libqrencode.3.dylib
     LIBS += -lqrencode
-} else {
-    message(Building without QRCode support)
 }
 
-USE_UPNP=1
 # use: qmake "USE_UPNP=1" ( enabled by default; default)
 #  or: qmake "USE_UPNP=0" (disabled by default)
 #  or: qmake "USE_UPNP=-" (not supported)
@@ -117,16 +67,8 @@ contains(USE_UPNP, -) {
         USE_UPNP=1
     }
     DEFINES += USE_UPNP=$$USE_UPNP STATICLIB
-    win32 {
-       contains(WINBITS, 32) {
-           INCLUDEPATH += C:/miniupnpc-1.9
-           LIBS += -L"C:/miniupnpc-1.9/miniupnpc"
-       } else {
-           INCLUDEPATH += "C:/$$MSYS/local/miniupnpc-1.9"
-           LIBS += -L"C:/$$MSYS/local/miniupnpc-1.9/miniupnpc"
-       }
-    }
-    LIBS += -lminiupnpc
+    INCLUDEPATH += $$MINIUPNPC_INCLUDE_PATH
+    LIBS += $$join(MINIUPNPC_LIB_PATH,,-L,) -lminiupnpc
     win32:LIBS += -liphlpapi
 }
 
@@ -148,20 +90,15 @@ contains(BITCOIN_NEED_QT_PLUGINS, 1) {
     QTPLUGIN += qcncodecs qjpcodecs qtwcodecs qkrcodecs qtaccessiblewidgets
 }
 
-!win32 {
+!windows {
     # for extra security against potential buffer overflows
     QMAKE_CXXFLAGS += -fstack-protector
     QMAKE_LFLAGS += -fstack-protector
     # do not enable this on windows, as it will result in a non-working executable!
 }
 
-!win32:!macx {
-    QMAKE_LFLAGS *= -static
-    QMAKE_LFLAGS *= -Wl
-}
-
 # regenerate src/build.h
-!win32|contains(USE_BUILD_INFO, 1) {
+!windows|contains(USE_BUILD_INFO, 1) {
     genbuild.depends = FORCE
     genbuild.commands = cd $$PWD; /bin/sh share/genbuild.sh $$OUT_PWD/build/build.h
     genbuild.target = $$OUT_PWD/build/build.h
@@ -170,11 +107,8 @@ contains(BITCOIN_NEED_QT_PLUGINS, 1) {
     DEFINES += HAVE_BUILD_INFO
 }
 
-QMAKE_CXXFLAGS += -msse2
-QMAKE_CFLAGS += -msse2
 QMAKE_CXXFLAGS_WARN_ON = -fdiagnostics-show-option -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter
 
-# Input
 DEPENDPATH += src src/json src/qt
 HEADERS += src/qt/bitcoingui.h \
     src/qt/transactiontablemodel.h \
@@ -196,7 +130,6 @@ HEADERS += src/qt/bitcoingui.h \
     src/util.h \
     src/uint256.h \
     src/kernel.h \
-    src/scrypt_mine.h \
     src/pbkdf2.h \
     src/serialize.h \
     src/strlcpy.h \
@@ -252,7 +185,8 @@ HEADERS += src/qt/bitcoingui.h \
     src/clientversion.h\
     src/coincontrol.h\
     src/qt/coincontroldialog.h \
-    src/qt/coincontroltreewidget.h
+    src/qt/coincontroltreewidget.h \
+    src/scrypt_mine.h
 
 SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/qt/coincontroltreewidget.cpp \
@@ -319,8 +253,8 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/kernel.cpp \
     src/scrypt-x86.S \
     src/scrypt-x86_64.S \
-    src/scrypt_mine.cpp \
-    src/pbkdf2.cpp
+    src/pbkdf2.cpp \
+    src/scrypt_mine.cpp
 
 RESOURCES += \
     src/qt/bitcoin.qrc
@@ -377,18 +311,45 @@ QMAKE_EXTRA_COMPILERS += TSQM
 # "Other files" to show in Qt Creator
 OTHER_FILES += \
     contrib/gitian-descriptors/* doc/*.rst doc/*.txt doc/README README.md res/bitcoin-qt.rc \
-    share/setup.nsi
+    share/setup.nsi \
+    android/AndroidManifest.xml \
+    android/res/drawable/icon.png \
+    android/res/drawable/logo.png \
+    android/res/drawable-hdpi/icon.png \
+    android/res/drawable-ldpi/icon.png \
+    android/res/drawable-mdpi/icon.png \
+    android/res/layout/splash.xml \
+    android/res/values/libs.xml \
+    android/res/values/strings.xml \
+    android/res/values-de/strings.xml \
+    android/res/values-el/strings.xml \
+    android/res/values-es/strings.xml \
+    android/res/values-et/strings.xml \
+    android/res/values-fa/strings.xml \
+    android/res/values-fr/strings.xml \
+    android/res/values-id/strings.xml \
+    android/res/values-it/strings.xml \
+    android/res/values-ja/strings.xml \
+    android/res/values-ms/strings.xml \
+    android/res/values-nb/strings.xml \
+    android/res/values-nl/strings.xml \
+    android/res/values-pl/strings.xml \
+    android/res/values-pt-rBR/strings.xml \
+    android/res/values-ro/strings.xml \
+    android/res/values-rs/strings.xml \
+    android/res/values-ru/strings.xml \
+    android/res/values-zh-rCN/strings.xml \
+    android/res/values-zh-rTW/strings.xml \
+    android/src/org/kde/necessitas/ministro/IMinistro.aidl \
+    android/src/org/kde/necessitas/ministro/IMinistroCallback.aidl \
+    android/src/org/kde/necessitas/origo/QtActivity.java \
+    android/src/org/kde/necessitas/origo/QtApplication.java \
+    android/version.xml
 
 # platform specific defaults, if not overridden on command line
 isEmpty(BOOST_LIB_SUFFIX) {
     macx:BOOST_LIB_SUFFIX = -mt
-    win32 {
-      contains(WINBITS, 32) {
-         BOOST_LIB_SUFFIX = -mgw44-mt-d-1_55
-      } else {
-         BOOST_LIB_SUFFIX = -mgw47-mt-d-1_55
-      }
-    }
+    windows:BOOST_LIB_SUFFIX = -mgw44-mt-s-1_53
 }
 
 isEmpty(BOOST_THREAD_LIB_SUFFIX) {
@@ -396,7 +357,7 @@ isEmpty(BOOST_THREAD_LIB_SUFFIX) {
 }
 
 isEmpty(BDB_LIB_PATH) {
-    macx:BDB_LIB_PATH = /usr/local/BerkeleyDB.4.8/lib
+    macx:BDB_LIB_PATH = /opt/local/lib/db48
 }
 
 isEmpty(BDB_LIB_SUFFIX) {
@@ -404,7 +365,7 @@ isEmpty(BDB_LIB_SUFFIX) {
 }
 
 isEmpty(BDB_INCLUDE_PATH) {
-    macx:BDB_INCLUDE_PATH = /usr/local/BerkeleyDB.4.8/include
+    macx:BDB_INCLUDE_PATH = /opt/local/include/db48
 }
 
 isEmpty(BOOST_LIB_PATH) {
@@ -415,10 +376,11 @@ isEmpty(BOOST_INCLUDE_PATH) {
     macx:BOOST_INCLUDE_PATH = /opt/local/include
 }
 
-win32:DEFINES += WIN32
-win32:RC_FILE = src/qt/res/bitcoin-qt.rc
+windows:LIBS += -lshlwapi
+windows:DEFINES += WIN32
+windows:RC_FILE = src/qt/res/bitcoin-qt.rc
 
-win32:!contains(MINGW_THREAD_BUGFIX, 0) {
+windows:!contains(MINGW_THREAD_BUGFIX, 0) {
     # At least qmake's win32-g++-cross profile is missing the -lmingwthrd
     # thread-safety flag. GCC has -mthreads to enable this, but it doesn't
     # work with static linking. -lmingwthrd must come BEFORE -lmingw, so
@@ -429,7 +391,7 @@ win32:!contains(MINGW_THREAD_BUGFIX, 0) {
     QMAKE_LIBS_QT_ENTRY = -lmingwthrd $$QMAKE_LIBS_QT_ENTRY
 }
 
-!win32:!macx {
+!windows:!mac {
     DEFINES += LINUX
     LIBS += -lrt
 }
@@ -439,45 +401,21 @@ macx:OBJECTIVE_SOURCES += src/qt/macdockiconhandler.mm
 macx:LIBS += -framework Foundation -framework ApplicationServices -framework AppKit
 macx:DEFINES += MAC_OSX MSG_NOSIGNAL=0
 macx:ICON = src/qt/res/icons/bitcoin.icns
-macx:TARGET = "AndroidTokens2 Qt"
-macx:QMAKE_CFLAGS_THREAD += -pthread
-macx:QMAKE_LFLAGS_THREAD += -pthread
-macx:QMAKE_CXXFLAGS_THREAD += -pthread
+macx:TARGET = "Gamecoin-Qt"
 
 # Set libraries and includes at end, to use platform-defined defaults if not overridden
 INCLUDEPATH += $$BOOST_INCLUDE_PATH $$BDB_INCLUDE_PATH $$OPENSSL_INCLUDE_PATH $$QRENCODE_INCLUDE_PATH
-win32:LIBS += -L"C:/$$MSYS/local/ssl/lib"
-win32:contains(WINBITS, 64) {
-    LIBS += -L"C:/$$MSYS/local/BerkeleyDB.4.8/lib"
-    LIBS += "C:/mingw64/bin/libwinpthread-1.dll"
-    LIBS += "C:/$$MSYS/local/lib/libboost_filesystem-mgw47-mt-d-1_55.dll"
-    LIBS += -static
-}
-win32:LIBS += -L"C:/$$MSYS/local/lib"
-# win32:LIBS += "C:/mingw64/x86_64-w64-mingw32/lib/libgcc_s_sjlj-1.dll"
-# win32:LIBS += "C:/mingw64/x86_64-w64-mingw32/lib/libstdc++-6.dll"
-LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) \
-        $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
+LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
 LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
 # -lgdi32 has to happen after -lcrypto (see  #681)
-win32:LIBS += -lws2_32 -lshlwapi -lmswsock -lole32 -loleaut32 -luuid -lgdi32
-LIBS += -lboost_system$$BOOST_LIB_SUFFIX \
-        -lboost_filesystem$$BOOST_LIB_SUFFIX \
-        -lboost_program_options$$BOOST_LIB_SUFFIX \
-        -lboost_thread$$BOOST_THREAD_LIB_SUFFIX
-
-win32:LIBS += -lboost_chrono$$BOOST_LIB_SUFFIX
-
-win32:contains(WINBITS, 64) {
-       LIBS += -pthread
-}
+windows:LIBS += -lws2_32 -lmswsock -lole32 -loleaut32 -luuid -lgdi32
+LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX
 
 contains(RELEASE, 1) {
-    !win32:!macx {
+    !windows:!macx {
         # Linux: turn dynamic linking back on for c/c++ runtime libraries
         LIBS += -Wl,-Bdynamic
     }
 }
 
 system($$QMAKE_LRELEASE -silent $$_PRO_FILE_)
-
